@@ -1,17 +1,23 @@
 import java.util.Scanner;
 
-public class Probuy {
+public class Main {
     public static void main(String[] args) throws Exception {
-        while (true) {
-            Scanner scanner = new Scanner(System.in);
-            String data = scanner.nextLine();
-            String[] strings = data.split(" ");
+        Scanner scanner = new Scanner(System.in);
+        String data = scanner.nextLine();
+        System.out.println(calculate(data));
+    }
+
+    public static String calculate(String input) throws Exception {
+
+
+            String[] strings = input.split(" ");
             if (strings.length > 3) {
                 throw new Exception();
             }
             String num1str = strings[0];
             String num2str = strings[2];
             String action = strings[1];
+
 
             int num1;
             int num2;
@@ -26,58 +32,42 @@ public class Probuy {
                 num2 = stringToRoman(num2str);
                 isRoman = true;
             }
-            switch (action) {
-                case "+":
-                    result = num1 + num2;
-                    break;
-                case "-":
-                    result = num1 - num2;
-                    break;
-                case "*":
-                    result = num1 * num2;
-                    break;
-                case "/":
-                    result = num1 / num2;
-                    break;
-                default:
-                    throw new Exception();
+            if ((num1 < 1 || num1 > 10) || (num2 < 1 || num2 > 10)) {
+                throw new Exception();
             }
-            if (isRoman == false) {
-                System.out.println(result);
+        result = switch (action) {
+            case "+" -> num1 + num2;
+            case "-" -> num1 - num2;
+            case "*" -> num1 * num2;
+            case "/" -> num1 / num2;
+            default -> throw new Exception();
+        };
+            if (!isRoman) {
             } else {
                 if (result < 0) {
                     throw new Exception();
                 }
-                System.out.println(integerToRoman(result));
             }
-        }
+            return String.valueOf(result);
+
     }
+
     private static int stringToRoman(String num) throws Exception {
-        switch (num) {
-            case "I":
-                return 1;
-            case "II":
-                return 2;
-            case "III":
-                return 3;
-            case "IV":
-                return 4;
-            case "V":
-                return 5;
-            case "VI":
-                return 6;
-            case "VII":
-                return 7;
-            case "VIII":
-                return 8;
-            case "IX":
-                return 9;
-            case "X":
-                return 10;
-            default:
-                throw new Exception();
-        }
+        return switch (num) {
+            case "I" -> 1;
+            case "II" -> 2;
+            case "III" -> 3;
+            case "IV" -> 4;
+            case "V" -> 5;
+            case "VI" -> 6;
+            case "VII" -> 7;
+            case "VIII" -> 8;
+            case "IX" -> 9;
+            case "X" -> 10;
+            default -> throw new Exception();
+        };
     }
+
     public static String integerToRoman(int num) {
         int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
         String[] romanLetters = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
